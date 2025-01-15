@@ -1,8 +1,20 @@
+// all libraries included which are needed
+
+// basic library for input & output
 #include <iostream>
+
+// for convert string into an object for better string handling and specific operations poosible like the comma handling
 #include <sstream>
+
+// for working with files in the code
 #include<fstream>
+
+// for basic string functions
 #include<string>
+
+// for setw function for better display handling
 #include <iomanip>
+
 using namespace std;
 
 struct Patient 
@@ -20,6 +32,7 @@ const int MAX_PATIENTS = 100;
 int patient_count = 0;
 Patient patients[MAX_PATIENTS] = {};
 
+// a function which cuts off if string has more than width length to ensure proper display
 string truncateString(const string& str, int width) 
 {
     if (str.length() > width) {
@@ -28,6 +41,7 @@ string truncateString(const string& str, int width)
     return str;
 }
 
+// used to display all the patients from array
 void display_patients()
 {
     if (patient_count == 0) {
@@ -55,12 +69,15 @@ void display_patients()
     }
 }
 
+// function to add data to file
 void add_patient_to_file(string data)
 {
     ifstream infile(filename);
-    if (!infile) {
+    if (!infile) 
+    {
         ofstream newFile(filename);
-        if (newFile) {
+        if (newFile) 
+        {
             newFile << data << endl;
         } 
         else 
@@ -68,7 +85,8 @@ void add_patient_to_file(string data)
             cerr << "Failed to create the file: " << filename << endl;
         }
     }
-    else {
+    else 
+    {
         ofstream file(filename, ios::app);
     
         if (file.is_open()) 
@@ -83,6 +101,7 @@ void add_patient_to_file(string data)
     }
 }
 
+// function to add data in array at run time, also (add_to_file is called inside it)
 void add_patient() 
 {
     string patient_data = "";
@@ -136,6 +155,10 @@ void add_patient()
     patient_count++;
 }
 
+// used to search a patient by 3 options
+// 1. Patient Id
+// 2. Patient Name
+// 3. Room Number
 void search_patient() 
 {
     int choice;
@@ -149,7 +172,8 @@ void search_patient()
 
     switch (choice) 
     {
-    case 1: {
+    case 1: 
+        {
         bool id_found = false;
         int id_to_search;
 
@@ -157,7 +181,8 @@ void search_patient()
         cin >> id_to_search;
         for (int i = 0; i < patient_count; i++) 
         {
-            if (patients[i].patient_id == id_to_search) {
+            if (patients[i].patient_id == id_to_search) 
+            {
                 id_found = true;
                 found_index = i;
                 break;
@@ -186,7 +211,8 @@ void search_patient()
         }
         break;
     }
-    case 2: {
+    case 2: 
+        {
         bool name_found = false;
         string name_to_search;
 
@@ -195,7 +221,8 @@ void search_patient()
         getline(cin, name_to_search);
         for (int i = 0; i < patient_count; i++) 
         {
-            if (patients[i].patient_name == name_to_search) {
+            if (patients[i].patient_name == name_to_search) 
+            {
                 name_found = true;
                 found_index = i;
                 break;
@@ -224,7 +251,8 @@ void search_patient()
         }
         break;
     }
-    case 3: {
+    case 3: 
+        {
         bool room_found = false;
         string room_to_search;
 
@@ -233,7 +261,8 @@ void search_patient()
         getline(cin,room_to_search);
         for (int i = 0; i < patient_count; i++) 
         {
-            if (patients[i].room_number ==room_to_search) {
+            if (patients[i].room_number ==room_to_search) 
+            {
                 room_found = true;
                 found_index = i;
                 break;
@@ -268,10 +297,12 @@ void search_patient()
     }
 }
 
+// used to read data from file at start of code and store in array
 void read_patients_from_file() 
 {
     ifstream file(filename);
-    if (!file) {
+    if (!file) 
+    {
         cerr << "Error: Could not open file " << filename << endl;
         return;
     }
@@ -311,6 +342,7 @@ void read_patients_from_file()
     file.close();
 }
 
+// main function
 int main() 
 {
 
@@ -328,7 +360,8 @@ int main()
         cin >> choice;
         cin.ignore();
         
-        switch(choice) {
+        switch(choice) 
+        {
             case 1:
                 add_patient();
                 break;
@@ -343,7 +376,9 @@ int main()
                 return 0;
             default:
                 cout << "Invalid choice, please try again." << endl;
+            
         }
+        
     }
 
 
